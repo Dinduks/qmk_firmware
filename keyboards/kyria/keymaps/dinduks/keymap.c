@@ -25,6 +25,8 @@ enum {
   TD_SCLN_COLN,
   TD_COMM_CCEDILLE,
   TD_DOT_ELLIPSIS,
+  TD_UNDS_MINS,
+  TD_PLUS_EQL,
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
@@ -35,6 +37,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_SCLN_COLN]  = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLN),
   [TD_COMM_CCEDILLE]  = ACTION_TAP_DANCE_DOUBLE(KC_COMM, RALT(KC_COMM)),
   [TD_DOT_ELLIPSIS]  = ACTION_TAP_DANCE_DOUBLE(KC_DOT, UC(0x2026)),
+  [TD_UNDS_MINS] = ACTION_TAP_DANCE_DOUBLE(KC_UNDS, KC_MINS),
+  [TD_PLUS_EQL] = ACTION_TAP_DANCE_DOUBLE(KC_PLUS, KC_EQL),
 };
 
 void matrix_init_user(void) {
@@ -95,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Raise Layer: Number keys, special chars and function keys
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  !   |  @   |  #   |  $   |  %   |                              |  ^   |  &   |  *   |  _   |  +   |  F12   |
+ * |        |  !   |  @   |  #   |  $   |  %   |                              |  ^   |  &   |  *   |  _ - |  + = |  F12   |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |   ▽    |  1   |  2   |  3   |  4   |  5   |                              |  6   |  7   |  8   |  9   |  0   |  F11   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
@@ -106,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        `----------------------------------'  `----------------------------------'
  */
   [_RAISE] = LAYOUT(
-    _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_UNDS, KC_PLUS, KC_F12,
+    _______, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, TD(TD_UNDS_MINS), TD(TD_PLUS_EQL), KC_F12,
     KC_TRNS, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_F11,
     KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______, _______, _______, _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_TRNS,
                                KC_TRNS, KC_TRNS, _______, _______, _______, _______, _______, _______, _______, _______
@@ -118,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |        |      |      |      |      |      |                              |      |  }   |      |      |      |        |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |   ▽    |      |  []  |  {}  |  ()  |      |                              |      |  )   |  }   |  -   |  =   |        |
+ * |   ▽    |      |  []  |  {}  |  ()  |      |                              |      |  )   |  }   |      |      |        |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
  * |   ▽    |      |      |      |      |      |      |      |  |      |      |      |  ]   |      |      |      |    ▽   |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
@@ -128,7 +132,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
     [_SYMBOLS] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, KC_RCBR, _______, _______, _______, _______,
-      KC_TRNS, _______, TD(TD_LBRC_RBRC), TD(TD_LCBR_RCBR), TD(TD_LPRN_RPRN), _______,          _______, KC_RPRN, KC_RCBR, KC_MINS, KC_EQL,  _______,
+      KC_TRNS, _______, TD(TD_LBRC_RBRC), TD(TD_LCBR_RCBR), TD(TD_LPRN_RPRN), _______,          _______, KC_RPRN, KC_RCBR, _______, _______,  _______,
       KC_TRNS, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_RBRC, _______, _______, _______, KC_TRNS,
                                  KC_TRNS, KC_TRNS, _______, _______, _______, _______, _______, _______, _______, _______
     ),
