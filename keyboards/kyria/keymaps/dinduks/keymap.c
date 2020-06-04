@@ -61,7 +61,7 @@ enum layers {
   _QWERTY = 0,
   _LOWER,
   _RAISE,
-  _WIMAN
+  _SYMBOLS
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -83,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,                  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD(TD_BSLS_GRV),
     MT(MOD_LCTL,KC_ESC),     KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                     KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_SCLN_COLN), KC_QUOT,
     KC_LSFT,                 KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, _______, _______, _______, _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), TD(TD_DOT_ELLIPSIS),  KC_SLSH, MT(MOD_RSFT,KC_CAPS),
-             KC_LALT, LT(_WIMAN,KC_LGUI), LT(_LOWER,KC_ENT), KC_LSFT, _______, _______, KC_LSFT, LT(_RAISE,KC_SPC), LT(_WIMAN, KC_BSPC), KC_RALT
+             KC_LALT, KC_LGUI, LT(_LOWER,KC_ENT), KC_LSFT, _______, _______, KC_LSFT, LT(_RAISE,KC_SPC), LT(_SYMBOLS, KC_BSPC), KC_RALT
   ),
 
 /*
@@ -142,9 +142,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_WIMAN] = LAYOUT(
+    [_SYMBOLS] = LAYOUT(
       _______, _______, _______, _______, _______, _______,                                     _______, _______, _______, _______, _______, _______,
-      KC_TRNS, _______, _______, _______, _______, _______,          LCTL(RGUI(KC_LEFT)), LALT(KC_DOWN), LALT(KC_UP), LCTL(RGUI(KC_RIGHT)), _______, _______,
+      KC_TRNS, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______,  _______,
       KC_TRNS, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_TRNS,
                                  KC_TRNS, KC_TRNS, _______, _______, _______, _______, _______, _______, _______, _______
     ),
@@ -192,7 +192,7 @@ static void render_status(void) {
     case _RAISE:
       oled_write_P(PSTR("Raise\n"), false);
       break;
-    case _WIMAN:
+    case _SYMBOLS:
       oled_write_P(PSTR("Symbols\n"), false);
       break;
     default:
