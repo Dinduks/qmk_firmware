@@ -59,6 +59,7 @@ void matrix_init_user(void) {
 
 enum layers {
   _QWERTY = 0,
+  _GAMING,
   _LOWER,
   _RAISE,
   _SYMBOLS
@@ -73,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
  * |Ctrl/ESC|   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | Space|      |  |      |      |   N  |   M  | ,  < | . >  | /  ? | RShift |
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Space| Frag |  |      |      |   N  |   M  | ,  < | . >  | /  ? | RShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
  *                        | Alt  | GUI  | Enter|LShift| Ctrl |  | Ctrl |LShift| Space| Bksp | AltGr|
  *                        |      |      | Lower|      |      |  |      |      | Raise| Symb |      |
@@ -82,8 +83,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT(
     KC_TAB,                  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD(TD_BSLS_GRV),
     MT(MOD_LCTL,KC_ESC),     KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                     KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_SCLN_COLN), KC_QUOT,
-    KC_LSFT,                 KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, KC_SPC,  _______, _______, _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), KC_DOT,  KC_SLSH, MT(MOD_RSFT,KC_CAPS),
+    KC_LSFT,                 KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, KC_SPC, TO(_GAMING), _______, _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), KC_DOT,  KC_SLSH, MT(MOD_RSFT,KC_CAPS),
              KC_LALT, KC_LGUI, LT(_LOWER,KC_ENT), KC_LSFT, KC_LCTL, KC_LCTL, KC_LSFT, LT(_RAISE,KC_SPC), KC_BSPC, KC_RALT
+  ),
+
+/*
+ * Base Layer: GAMING
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  `     |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |Ctrl/ESC|   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | LShift |   Z  |   X  |   C  |   V  |   B  | Space|      |  |      |      |   N  |   M  | ,  < | . >  | /  ? | RShift |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        | Alt  | GUI  | Enter|LShift|      |  |      |LShift| Space| Bksp | AltGr|
+ *                        |      |      | Lower|      |      |  |      |      | Raise| Symb |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+  [_GAMING] = LAYOUT(
+    KC_TAB,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_GRV,
+    KC_ESC,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                     KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_SCLN_COLN), KC_QUOT,
+    KC_LSFT, KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, _______, TO(_QWERTY), _______, _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), TD(TD_DOT_ELLIPSIS),  KC_SLSH, MT(MOD_RSFT,KC_CAPS),
+             KC_LALT, KC_NO, LT(_LOWER,KC_ENT), KC_LSFT, _______, _______, KC_LSFT, LT(_RAISE,KC_SPC), KC_BSPC, KC_RALT
   ),
 
 /*
@@ -185,6 +207,9 @@ static void render_status(void) {
   switch (get_highest_layer(layer_state)) {
     case _QWERTY:
       oled_write_P(PSTR("Default\n"), false);
+      break;
+    case _GAMING:
+      oled_write_P(PSTR("FR4G M0D3\n"), false);
       break;
     case _LOWER:
       oled_write_P(PSTR("Lower\n"), false);
