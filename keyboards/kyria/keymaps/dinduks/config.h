@@ -33,3 +33,6 @@
 
 #define SPLIT_USB_DETECT
 #define NO_USB_STARTUP_CHECK
+
+#define COMBO_COUNT 1
+#define COMBO_TERM 30

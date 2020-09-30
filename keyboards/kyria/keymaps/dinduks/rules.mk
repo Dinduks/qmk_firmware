@@ -3,3 +3,4 @@ ENCODER_ENABLE = yes       # ENables the use of one or more encoders
 RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
 TAP_DANCE_ENABLE = yes
 UNICODE_ENABLE = yes
+COMBO_ENABLE = yes

@@ -71,6 +71,27 @@ enum layers {
   _SYMBOLS
 };
 
+// Combos
+enum combo_events {
+  TOGGLE_GAMING_MODE,
+};
+
+const uint16_t PROGMEM toggle_gaming_mode_combo[] = {KC_A, KC_V, COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+  [TOGGLE_GAMING_MODE] = COMBO_ACTION(toggle_gaming_mode_combo),
+};
+
+void process_combo_event(uint8_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case TOGGLE_GAMING_MODE:
+      if (pressed) {
+        layer_invert(_GAMING);
+      }
+      break;
+  }
+}
+// Combos end
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
  * Base Layer: QWERTY
