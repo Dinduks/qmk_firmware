@@ -57,6 +57,12 @@ void matrix_init_user(void) {
   set_unicode_input_mode(UC_LNX);
 }
 
+void led_set_user(uint8_t usb_led) {
+  if (!IS_LED_ON(host_keyboard_leds(), USB_LED_NUM_LOCK)) {
+    tap_code(KC_NUMLOCK);
+  }
+}
+
 enum layers {
   _QWERTY = 0,
   _GAMING,
@@ -93,19 +99,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-------------------------------------------.                              ,-------------------------------------------.
  * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  `     |
  * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/ESC|   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
+ * |  Ctrl  |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
  * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | Space|      |  |      |      |   N  |   M  | ,  < | . >  | /  ? | RShift |
+ * |  Esc   |   Z  |   X  |   C  |   V  |   B  |Alt+F9| Qwe  |  |      |      |   N  |   M  | ,  < | . >  | /  ? | RShift |
  * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        | Alt  | GUI  | Enter|LShift|      |  |      |LShift| Space| Bksp | AltGr|
- *                        |      |      | Lower|      |      |  |      |      | Raise| Symb |      |
+ *                        | Num1 | Num2 | Enter|LShift| Lower|  |      |LShift| Space| Bksp | Num4 |
+ *                        |      |      |      |      | Num3 |  |      |      | Raise| Symb |      |
  *                        `----------------------------------'  `----------------------------------'
  */
   [_GAMING] = LAYOUT(
     KC_TAB,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_GRV,
-    KC_ESC,  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                     KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_SCLN_COLN), KC_QUOT,
-    KC_LSFT, KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, _______, TO(_QWERTY), _______, _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), TD(TD_DOT_ELLIPSIS),  KC_SLSH, MT(MOD_RSFT,KC_CAPS),
-             KC_LALT, KC_NO, LT(_LOWER,KC_ENT), KC_LSFT, _______, _______, KC_LSFT, LT(_RAISE,KC_SPC), KC_BSPC, KC_RALT
+    KC_LCTRL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                     KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_SCLN_COLN), KC_QUOT,
+    KC_ESC, KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, A(KC_F9), TO(_QWERTY), _______, _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), KC_DOT,  KC_SLSH, KC_KP_4,
+             KC_KP_1, KC_KP_2, KC_ENT, KC_LSFT, LT(_LOWER,KC_KP_3), _______, KC_LSFT, LT(_RAISE,KC_SPC), KC_BSPC, KC_RALT
+
   ),
 
 /*
@@ -225,7 +232,6 @@ static void render_status(void) {
   }
 
   uint8_t led_usb_state = host_keyboard_leds();
-  oled_write_P(IS_LED_ON(led_usb_state, USB_LED_NUM_LOCK) ? PSTR("NUMLCK ") : PSTR("       "), false);
   oled_write_P(IS_LED_ON(led_usb_state, USB_LED_CAPS_LOCK) ? PSTR("CAPLCK ") : PSTR("       "), false);
   oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("SCRLCK ") : PSTR("       "), false);
 }
