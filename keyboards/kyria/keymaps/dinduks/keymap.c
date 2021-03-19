@@ -66,6 +66,7 @@ void led_set_user(uint8_t usb_led) {
 enum layers {
   _QWERTY = 0,
   _GAMING,
+  _GAMING2,
   _LOWER,
   _RAISE,
 };
@@ -109,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT(
     KC_TAB,                  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD(TD_BSLS_GRV),
     MT(MOD_LCTL,KC_ESC),     KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                     KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_SCLN_COLN), KC_QUOT,
-    KC_LSFT,                 KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, KC_SPC, TO(_GAMING), _______, _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), KC_DOT,  KC_SLSH, MT(MOD_RSFT,KC_CAPS),
+    KC_LSFT,                 KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, KC_SPC, TO(_GAMING), TO(_GAMING2), _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), KC_DOT,  KC_SLSH, MT(MOD_RSFT,KC_CAPS),
              KC_LALT, KC_LGUI, LT(_LOWER,KC_ENT), KC_LSFT, KC_LCTL, KC_LCTL, KC_LSFT, LT(_RAISE,KC_SPC), KC_BSPC, KC_RALT
   ),
 
@@ -131,6 +132,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,  KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,                                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_GRV,
     KC_LCTRL,KC_A,   KC_S,   KC_D,   KC_F,   KC_G,                                     KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_SCLN_COLN), KC_QUOT,
     KC_ESC, KC_Z,   KC_X,   KC_C,   KC_V,   KC_B, A(KC_F9), TO(_QWERTY), _______, _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), KC_DOT,  KC_SLSH, KC_KP_4,
+             KC_KP_1, KC_KP_2, KC_ENT, KC_LSFT, KC_KP_3, _______, KC_LSFT, LT(_RAISE,KC_SPC), KC_BSPC, KC_RALT
+
+  ),
+
+/*
+ * Base Layer: GAMING2
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  `     |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |  Ctrl  |   A  |   S  |  D   |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |  ' "   |
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * |  Esc   |   Z  |   X  |   C  |   V  |   B  |Alt+F9| Qwe  |  |      |      |   N  |   M  | ,  < | . >  | /  ? | RShift |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        | Num1 | Num2 | Enter|LShift| Num3 |  |      |LShift| Space| Bksp | Num4 |
+ *                        |      |      |      |      |      |  |      |      | Raise| Symb |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+  [_GAMING2] = LAYOUT(
+    KC_TAB,  KC_T,   KC_Q,   KC_W,   KC_E,   KC_R,                                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_GRV,
+    KC_LCTRL,KC_G,   KC_A,   KC_S,   KC_D,   KC_F,                                     KC_H,    KC_J,    KC_K,    KC_L,    TD(TD_SCLN_COLN), KC_QUOT,
+    KC_ESC,  KC_B,   KC_Z,   KC_X,   KC_C,   KC_V, A(KC_F9), _______, TO(_QWERTY), _______, KC_N,    KC_M,    TD(TD_COMM_CCEDILLE), KC_DOT,  KC_SLSH, KC_KP_4,
              KC_KP_1, KC_KP_2, KC_ENT, KC_LSFT, KC_KP_3, _______, KC_LSFT, LT(_RAISE,KC_SPC), KC_BSPC, KC_RALT
 
   ),
@@ -216,6 +239,9 @@ static void render_status(void) {
       break;
     case _GAMING:
       oled_write_P(PSTR("FR4G M0D3\n"), false);
+      break;
+    case _GAMING2:
+      oled_write_P(PSTR("FR4G M0D3 2\n"), false);
       break;
     case _LOWER:
       oled_write_P(PSTR("Lower\n"), false);
